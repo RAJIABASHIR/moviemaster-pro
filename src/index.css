@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+/* ---- Theme (Tailwind v4) ---- */
+@custom-variant dark (&:where(.dark, .dark *));
+@theme {
+  --color-primary: #7c3aed; /* enables bg-primary / text-primary / border-primary */
+}
+
+/* Put base element styles in the base layer so they load before utilities */
+@layer base {
+  /* Make browser UI (scrollbars, form controls) follow the .dark class */
+  :root {
+    color-scheme: light;
+  }
+  .dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100;
+  }
+
+  /* headings & paragraphs default look */
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply text-slate-900 dark:text-slate-100 font-semibold tracking-tight;
+  }
+  p {
+    @apply text-slate-700 dark:text-slate-300 leading-relaxed;
+  }
+}
+
+/* page container helper */
+.container {
+  @apply max-w-7xl mx-auto px-4;
+}
+
+/* type scale (consistent across pages) */
+.h1 {
+  @apply text-3xl md:text-4xl font-semibold tracking-tight;
+}
+.h2 {
+  @apply text-2xl md:text-3xl font-semibold tracking-tight;
+}
+.muted {
+  @apply text-slate-600 dark:text-slate-300;
+}
+
+/* reusable UI */
+.card {
+  @apply rounded-2xl border border-slate-200/70 dark:border-slate-800/60 bg-white dark:bg-slate-900 shadow-sm;
+}
+.btn {
+  @apply inline-flex items-center gap-2 rounded-xl px-4 py-2 bg-primary text-white hover:opacity-90 transition active:scale-[0.98];
+}
+.btn-outline {
+  @apply inline-flex items-center gap-2 rounded-xl px-4 py-2 border border-slate-300 dark:border-slate-700 hover:bg-slate-100/50 dark:hover:bg-slate-800/50;
+}
+.badge {
+  @apply inline-flex px-2 py-1 text-xs rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300;
+}
+
+.poster {
+  @apply w-full h-72 md:h-80 object-cover rounded-xl;
+}
