@@ -2,7 +2,7 @@ import axios from "axios";
 import { auth } from "../lib/firebase";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5050/api",
+  baseURL: import.meta.env.VITE_API_URL || "https://moviemaster-pro-server-xi.vercel.app/",
 });
 
 console.log("API base:", api.defaults.baseURL);
