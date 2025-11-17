@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import AuthProvider from "../context/AuthProvider";   // component
+import AuthProvider from "../context/AuthProvider";   
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import api from "../api/axios";
