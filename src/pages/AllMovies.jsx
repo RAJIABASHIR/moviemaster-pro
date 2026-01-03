@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 import Loader from "../components/Loader";
 import MovieCard from "../components/MovieCard";
+import MovieCardSkeleton from "../components/MovieCardSkeleton";
 
 export default function AllMovies() {
   const [loading, setLoading] = useState(true);
@@ -28,7 +29,7 @@ export default function AllMovies() {
     "Animation",
   ];
 
-  
+
   const toggleGenre = (g) => {
     setGenres((prev) =>
       prev.includes(g) ? prev.filter((x) => x !== g) : [...prev, g]
@@ -59,10 +60,10 @@ export default function AllMovies() {
     }
   }
 
-  
+
   useEffect(() => {
     load();
-   // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const applyFilters = async () => {
@@ -81,11 +82,11 @@ export default function AllMovies() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4">
+    <div className="container">
       <h1 className="h1 mt-6 mb-4">All Movies</h1>
 
-      
-      <div className="card p-4 grid md:grid-cols-4 gap-3">
+
+      <div className="card p-4 grid grid-cols-1 md:grid-cols-4 gap-3">
         <input
           className="input"
           placeholder="Search..."
@@ -149,10 +150,9 @@ export default function AllMovies() {
                 aria-pressed={selected}
                 className={`px-3 py-2 rounded-lg border transition shadow-sm
                   hover:shadow-md hover:shadow-slate-900/10 dark:hover:shadow-black/30
-                  ${
-                    selected
-                      ? "bg-primary text-white border-primary"
-                      : "border-slate-300 dark:border-slate-700 hover:bg-slate-100/60 dark:hover:bg-slate-800/60"
+                  ${selected
+                    ? "bg-primary text-white border-primary"
+                    : "border-slate-300 dark:border-slate-700 hover:bg-slate-100/60 dark:hover:bg-slate-800/60"
                   }`}
               >
                 {g}
@@ -174,10 +174,12 @@ export default function AllMovies() {
         </div>
       </div>
 
-      
+
       {loading ? (
-        <div className="py-10">
-          <Loader />
+        <div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {Array(8).fill(0).map((_, i) => (
+            <MovieCardSkeleton key={i} />
+          ))}
         </div>
       ) : (
         <>

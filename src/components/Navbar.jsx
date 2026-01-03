@@ -12,16 +12,16 @@ export default function Navbar() {
     "focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 " +
     "focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900";
 
-  const NavItem = ({ to, end = false, children }) => (
+  const NavItem = ({ to, end = false, children, className = "" }) => (
     <NavLink
       to={to}
-      end={end}  
+      end={end}
       className={({ isActive }) =>
-        isActive
+        (isActive
           ? `${baseItem} bg-primary text-white shadow-sm`
           : `${baseItem} text-slate-700 dark:text-slate-200 
               hover:bg-slate-100/60 dark:hover:bg-slate-800/60 
-              hover:text-slate-900 dark:hover:text-white`
+              hover:text-slate-900 dark:hover:text-white`) + " " + className
       }
       onClick={() => setOpen(false)}
     >
@@ -38,8 +38,10 @@ export default function Navbar() {
 
         <div className="hidden md:flex items-center gap-2">
           <NavItem to="/" end>Home</NavItem>
-          <NavItem to="/movies" end>All Movies</NavItem>   
+          <NavItem to="/movies" end>All Movies</NavItem>
+          <NavItem to="/about">About</NavItem>
           {user && <NavItem to="/movies/my-collection">My Collection</NavItem>}
+          {user && <NavItem to="/watchlist">Watchlist</NavItem>}
           {user && <NavItem to="/movies/add">Add Movie</NavItem>}
         </div>
 
@@ -70,22 +72,26 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {open && (
-        <div className="md:hidden border-t border-slate-200/70 dark:border-slate-800/60">
-          <div className="container py-3 flex flex-col gap-2">
-            <NavItem to="/" end>Home</NavItem>
-            <NavItem to="/movies" end>All Movies</NavItem> 
-            {user && <NavItem to="/movies/my-collection">My Collection</NavItem>}
-            {user && <NavItem to="/movies/add">Add Movie</NavItem>}
-            {!user && (
-              <>
-                <NavItem to="/login">Login</NavItem>
-                <NavItem to="/register">Register</NavItem>
-              </>
-            )}
+      {
+        open && (
+          <div className="md:hidden border-t border-slate-200/70 dark:border-slate-800/60">
+            <div className="container py-3 flex flex-col gap-2">
+              <NavItem to="/" end className="py-3">Home</NavItem>
+              <NavItem to="/movies" end className="py-3">All Movies</NavItem>
+              <NavItem to="/about" className="py-3">About</NavItem>
+              {user && <NavItem to="/movies/my-collection" className="py-3">My Collection</NavItem>}
+              {user && <NavItem to="/watchlist" className="py-3">Watchlist</NavItem>}
+              {user && <NavItem to="/movies/add" className="py-3">Add Movie</NavItem>}
+              {!user && (
+                <>
+                  <NavItem to="/login" className="py-3">Login</NavItem>
+                  <NavItem to="/register" className="py-3">Register</NavItem>
+                </>
+              )}
+            </div>
           </div>
-        </div>
-      )}
-    </header>
+        )
+      }
+    </header >
   );
 }

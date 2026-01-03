@@ -10,6 +10,7 @@ import MyCollection from "./pages/MyCollection";
 import Watchlist from "./pages/Watchlist";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import { useAuth } from "./hooks/useAuth";   // ✅ hook only
 
@@ -35,6 +36,7 @@ export default function App() {
           <Route path="/watchlist" element={<Protected><Watchlist /></Protected>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

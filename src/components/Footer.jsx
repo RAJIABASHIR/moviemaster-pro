@@ -8,7 +8,7 @@ export default function Footer() {
     <footer className="mt-12">
       {/* 👇 Theme-aware background */}
       <div className="bg-white dark:bg-black text-slate-900 dark:text-white py-12">
-        <div className="container mx-auto px-6 max-w-6xl">
+        <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-6 gap-8">
             <div className="md:col-span-2">
               <div className="font-bold text-lg">MovieMasterPro</div>

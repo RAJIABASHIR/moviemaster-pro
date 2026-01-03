@@ -4,6 +4,9 @@ import api from "../api/axios";
 import MovieCard from "../components/MovieCard";
 import { useAuth } from "../hooks/useAuth";
 import Loader from "../components/Loader";
+import Hero from "../components/Hero";
+import Skeleton from "../components/Skeleton";
+import MovieCardSkeleton from "../components/MovieCardSkeleton";
 
 
 const POSTER_FALLBACK =
@@ -71,26 +74,35 @@ export default function Home() {
     };
   }, []);
 
-  useEffect(() => {
-    if (!featured.length) return;
-    const id = setInterval(() => setIdx(i => (i + 1) % featured.length), 4000);
-    return () => clearInterval(id);
-  }, [featured]);
+
 
   const genres = useMemo(
-    () => ["Action","Drama","Comedy","Horror","Sci-Fi","Romance","Thriller","Animation"],
+    () => ["Action", "Drama", "Comedy", "Horror", "Sci-Fi", "Romance", "Thriller", "Animation"],
     []
   );
 
   if (loading) {
     return (
       <div className="container">
-        <section className="mt-6">
-          <div className="card p-10 text-center">
-            <Loader />
-            <p className="muted mt-4">Loading…</p>
+        {/* Hero Skeleton (approx height) */}
+        <Skeleton className="w-full h-[60vh] mt-6 mb-12" />
+
+        {/* Stats Skeleton */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+          {Array(4).fill(0).map((_, i) => (
+            <Skeleton key={i} className="h-24" />
+          ))}
+        </div>
+
+        {/* Section Skeleton */}
+        <div className="space-y-4">
+          <Skeleton className="h-8 w-48 mx-auto" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {Array(4).fill(0).map((_, i) => (
+              <MovieCardSkeleton key={i} />
+            ))}
           </div>
-        </section>
+        </div>
       </div>
     );
   }
@@ -98,50 +110,8 @@ export default function Home() {
   return (
     <div className="container">
       {/* Hero */}
-      <section className="mt-6">
-        {featured.length ? (
-          <div className="relative overflow-hidden rounded-2xl">
-            <img
-              src={featured[idx]?.posterUrl || POSTER_FALLBACK}
-              alt={featured[idx]?.title || "Featured movie"}
-              className="w-full h-[420px] object-cover"
-              loading="lazy"
-              onError={(e) => {
-                if (e.currentTarget.src !== POSTER_FALLBACK) {
-                  e.currentTarget.src = POSTER_FALLBACK;
-                }
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-            <div className="absolute bottom-0 p-6 sm:p-8 text-white">
-              <h1 className="h1 mb-2">{featured[idx]?.title || "Featured"}</h1>
-              <p className="max-w-xl opacity-90">
-                {(featured[idx]?.plotSummary || "").slice(0, 160)}
-                {(featured[idx]?.plotSummary || "").length > 160 ? "..." : ""}
-              </p>
-              <div className="mt-4 flex gap-2">
-                {featured[idx]?._id && (
-                  <Link to={`/movies/${featured[idx]._id}`} className="btn">View Details</Link>
-                )}
-                <Link to="/movies" className="btn-outline">Browse All</Link>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="card p-10 text-center">
-            <h1 className="h1 mb-2">Welcome to MovieMaster Pro</h1>
-            <p className="muted mb-6">No featured movies yet. Add your first movie to get started.</p>
-            <div className="flex gap-2 justify-center">
-              {user ? (
-                <Link to="/movies/add" className="btn">Add a Movie</Link>
-              ) : (
-                <Link to="/register" className="btn">Create Account</Link>
-              )}
-              <Link to="/movies" className="btn-outline">Browse</Link>
-            </div>
-          </div>
-        )}
-      </section>
+      {/* Hero */}
+      <Hero movies={featured} />
 
       {/* Stats */}
       <section className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -151,56 +121,67 @@ export default function Home() {
         <Stat label="Recently Added" value={recent.length} />
       </section>
 
+      {/* Features */}
+      <Features />
+
       {/* Top Rated */}
       <div className="text-center">
-      <Section title="Top Rated Movies">
-        {top.length ? (
-          <Grid>{top.map(m => <MovieCard key={m._id} movie={m} />)}</Grid>
-        ) : (
-          <EmptyRow text="No top rated movies yet." />
-        )}
-      </Section>
-       </div>
+        <Section title="Top Rated Movies">
+          {top.length ? (
+            <Grid>{top.map(m => <MovieCard key={m._id} movie={m} />)}</Grid>
+          ) : (
+            <EmptyRow text="No top rated movies yet." />
+          )}
+        </Section>
+      </div>
       {/* Recently Added */}
       <div className="text-center">
-      <Section title="Recently Added">
-        {recent.length ? (
-          <Grid>{recent.map(m => <MovieCard key={m._id} movie={m} />)}</Grid>
-        ) : (
-          <EmptyRow text="No recent movies yet." />
-        )}
-      </Section>
+        <Section title="Recently Added">
+          {recent.length ? (
+            <Grid>{recent.map(m => <MovieCard key={m._id} movie={m} />)}</Grid>
+          ) : (
+            <EmptyRow text="No recent movies yet." />
+          )}
+        </Section>
       </div>
-{/* Genres */}
-<div className="text-center">
-<Section title="Genres">
-  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-    {genres.map(g => (
-      <div
-        key={g}
-        className="card p-4 text-center cursor-pointer
+      {/* Genres */}
+      <div className="text-center">
+        <Section title="Genres">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            {genres.map(g => (
+              <div
+                key={g}
+                className="card p-4 text-center cursor-pointer
                    transition-all duration-200
                    hover:shadow-lg hover:-translate-y-0.5
                    hover:ring-1 hover:ring-primary/30"
-      >
-        {g}
+              >
+                {g}
+              </div>
+            ))}
+          </div>
+        </Section>
       </div>
-    ))}
-  </div>
-</Section>
-</div>
 
+      {/* Testimonials */}
+      <Testimonials />
+
+      {/* FAQ */}
+      <FAQ />
 
       {/* About */}
       <div className="text-center">
-      <Section title="About MovieMaster Pro">
-        <p className="max-w-3xl mx-auto text-left leading-relaxed muted">
-      MovieMaster Pro lets you browse, filter, and organize your favorite films.
-      Build personal collections, maintain a watchlist, and discover top rated and
-      recent titles with a clean, responsive UI.
-    </p>
-     </Section>
+        <Section title="About MovieMaster Pro">
+          <p className="max-w-3xl mx-auto text-left leading-relaxed muted">
+            MovieMaster Pro lets you browse, filter, and organize your favorite films.
+            Build personal collections, maintain a watchlist, and discover top rated and
+            recent titles with a clean, responsive UI.
+          </p>
+        </Section>
       </div>
+
+      {/* Newsletter */}
+      <Newsletter />
     </div>
   );
 }
@@ -229,4 +210,97 @@ function Stat({ label, value }) {
 
 function EmptyRow({ text }) {
   return <div className="card p-6 text-center muted">{text}</div>;
+}
+
+function Features() {
+  const features = [
+    { title: "Track Watchlist", icon: "📝", desc: "Keep a list of movies you want to see." },
+    { title: "Personal Collection", icon: "💿", desc: "Manage your own library of favorites." },
+    { title: "Community Reviews", icon: "⭐", desc: "See what others are saying." },
+    { title: "Dark Mode", icon: "🌙", desc: "Easy on the eyes, day or night." },
+  ];
+  return (
+    <Section title="Features">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        {features.map((f, i) => (
+          <div key={i} className="card p-5 text-center hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+            <div className="text-3xl mb-2">{f.icon}</div>
+            <h3 className="font-bold mb-1">{f.title}</h3>
+            <p className="text-sm muted">{f.desc}</p>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function Testimonials() {
+  const reviews = [
+    { user: "Sarah J.", text: "The best app for tracking my movie addiction! Love the clean design." },
+    { user: "Mike T.", text: "Finally replaced my spreadsheet. MovieMaster Pro is exactly what I needed." },
+    { user: "Emily R.", text: "Great community features and I love the dark mode support." },
+  ];
+  return (
+    <Section title="What Users Say">
+      <div className="grid md:grid-cols-3 gap-6">
+        {reviews.map((r, i) => (
+          <div key={i} className="card p-6">
+            <div className="flex gap-1 text-yellow-500 mb-2">★★★★★</div>
+            <p className="mb-4 italic opacity-90">"{r.text}"</p>
+            <div className="font-bold text-sm text-right">- {r.user}</div>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function FAQ() {
+  const faqs = [
+    { q: "Is it free to use?", a: "Yes, creating an account and tracking movies is completely free." },
+    { q: "Can I import my data?", a: "We are working on import features from other popular platforms." },
+    { q: "How do I add a movie?", a: "Once logged in, click 'Add Movie' in the navigation bar." },
+  ];
+  return (
+    <Section title="Frequently Asked Questions">
+      <div className="max-w-2xl mx-auto flex flex-col gap-4">
+        {faqs.map((f, i) => (
+          <div key={i} className="card p-5 text-left">
+            <h3 className="font-bold mb-2 text-lg">{f.q}</h3>
+            <p className="muted">{f.a}</p>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function Newsletter() {
+  const [email, setEmail] = useState("");
+  const subscribe = (e) => {
+    e.preventDefault();
+    if (email) {
+      alert(`Thanks for subscribing with ${email}!`);
+      setEmail("");
+    }
+  };
+  return (
+    <section className="mt-16 mb-8 card p-8 sm:p-12 text-center bg-gradient-to-br from-primary/10 to-transparent">
+      <h2 className="h2 mb-4">Stay Included</h2>
+      <p className="muted max-w-md mx-auto mb-6">
+        Get the latest movie news, trending lists, and feature updates delivered to your inbox.
+      </p>
+      <form onSubmit={subscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        <input
+          type="email"
+          placeholder="Enter your email"
+          className="flex-1 input"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          required
+        />
+        <button type="submit" className="btn">Subscribe</button>
+      </form>
+    </section>
+  );
 }
