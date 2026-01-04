@@ -11,6 +11,8 @@ import Watchlist from "./pages/Watchlist";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Help from "./pages/Help";
 import NotFound from "./pages/NotFound";
 import DashboardLayout from "./components/DashboardLayout";
 import DashboardHome from "./pages/DashboardHome";
@@ -33,20 +35,24 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/movies" element={<AllMovies />} />
           <Route path="/movies/:id" element={<MovieDetails />} />
-          <Route path="/movies/add" element={<Protected><AddMovie /></Protected>} />
-          <Route path="/movies/update/:id" element={<Protected><UpdateMovie /></Protected>} />
+
+
 
           {/* Dashboard Routes */}
           <Route path="/dashboard" element={<Protected><DashboardLayout /></Protected>}>
             <Route index element={<DashboardHome />} />
             <Route path="profile" element={<MyProfile />} />
             <Route path="my-collection" element={<MyCollection />} />
+            <Route path="add-movie" element={<AddMovie />} />
+            <Route path="update-movie/:id" element={<UpdateMovie />} />
           </Route>
 
           <Route path="/watchlist" element={<Protected><Watchlist /></Protected>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/help" element={<Help />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

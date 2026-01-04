@@ -40,8 +40,9 @@ export default function Navbar() {
           <NavItem to="/" end>Home</NavItem>
           <NavItem to="/movies" end>All Movies</NavItem>
           <NavItem to="/about">About</NavItem>
+          <NavItem to="/contact">Contact</NavItem>
+          <NavItem to="/help">Help</NavItem>
           {user && <NavItem to="/dashboard">Dashboard</NavItem>}
-          {user && <NavItem to="/movies/add">Add Movie</NavItem>}
         </div>
 
         <div className="flex items-center gap-2">
@@ -78,8 +79,9 @@ export default function Navbar() {
               <NavItem to="/" end className="py-3">Home</NavItem>
               <NavItem to="/movies" end className="py-3">All Movies</NavItem>
               <NavItem to="/about" className="py-3">About</NavItem>
+              <NavItem to="/contact" className="py-3">Contact</NavItem>
+              <NavItem to="/help" className="py-3">Help</NavItem>
               {user && <NavItem to="/dashboard" className="py-3">Dashboard</NavItem>}
-              {user && <NavItem to="/movies/add" className="py-3">Add Movie</NavItem>}
               {!user && (
                 <>
                   <NavItem to="/login" className="py-3">Login</NavItem>

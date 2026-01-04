@@ -106,7 +106,7 @@ export default function MyCollection() {
                 {m.genre} • {m.releaseYear}
               </div>
               <div className="mt-auto flex gap-2">
-                <Link to={`/movies/update/${id}`} className="btn w-full">
+                <Link to={`/dashboard/update-movie/${id}`} className="btn w-full">
                   Edit
                 </Link>
                 <button
