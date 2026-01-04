@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import AuthCtx from "./AuthContext";
 
@@ -16,8 +16,19 @@ export default function AuthProvider({ children }) {
 
   const logout = () => signOut(auth);
 
+  const updateUser = async (profile) => {
+    if (!auth.currentUser) return;
+    try {
+      await updateProfile(auth.currentUser, profile);
+      // Force refresh user state locally
+      setUser({ ...auth.currentUser });
+    } catch (e) {
+      throw e;
+    }
+  };
+
   return (
-    <AuthCtx.Provider value={{ user, ready, logout }}>
+    <AuthCtx.Provider value={{ user, ready, logout, updateUser }}>
       {children}
     </AuthCtx.Provider>
   );

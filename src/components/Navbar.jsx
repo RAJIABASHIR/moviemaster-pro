@@ -40,8 +40,7 @@ export default function Navbar() {
           <NavItem to="/" end>Home</NavItem>
           <NavItem to="/movies" end>All Movies</NavItem>
           <NavItem to="/about">About</NavItem>
-          {user && <NavItem to="/movies/my-collection">My Collection</NavItem>}
-          {user && <NavItem to="/watchlist">Watchlist</NavItem>}
+          {user && <NavItem to="/dashboard">Dashboard</NavItem>}
           {user && <NavItem to="/movies/add">Add Movie</NavItem>}
         </div>
 
@@ -79,8 +78,7 @@ export default function Navbar() {
               <NavItem to="/" end className="py-3">Home</NavItem>
               <NavItem to="/movies" end className="py-3">All Movies</NavItem>
               <NavItem to="/about" className="py-3">About</NavItem>
-              {user && <NavItem to="/movies/my-collection" className="py-3">My Collection</NavItem>}
-              {user && <NavItem to="/watchlist" className="py-3">Watchlist</NavItem>}
+              {user && <NavItem to="/dashboard" className="py-3">Dashboard</NavItem>}
               {user && <NavItem to="/movies/add" className="py-3">Add Movie</NavItem>}
               {!user && (
                 <>

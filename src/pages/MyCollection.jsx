@@ -4,6 +4,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import api from "../api/axios";
 import Loader from "../components/Loader";
+import MovieCardSkeleton from "../components/MovieCardSkeleton";
 import toast from "react-hot-toast";
 
 export default function MyCollection() {
@@ -78,7 +79,18 @@ export default function MyCollection() {
     }
   }
 
-  if (loading || !items) return <Loader />;
+  if (loading || !items) {
+    return (
+      <div className="max-w-7xl mx-auto px-4">
+        <h1 className="mt-6 mb-4">My Collection</h1>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {[...Array(8)].map((_, i) => (
+            <MovieCardSkeleton key={i} />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4">

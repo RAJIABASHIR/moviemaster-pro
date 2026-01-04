@@ -12,6 +12,9 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
+import DashboardLayout from "./components/DashboardLayout";
+import DashboardHome from "./pages/DashboardHome";
+import MyProfile from "./pages/MyProfile";
 import { useAuth } from "./hooks/useAuth";   // ✅ hook only
 
 function Protected({ children }) {
@@ -32,7 +35,14 @@ export default function App() {
           <Route path="/movies/:id" element={<MovieDetails />} />
           <Route path="/movies/add" element={<Protected><AddMovie /></Protected>} />
           <Route path="/movies/update/:id" element={<Protected><UpdateMovie /></Protected>} />
-          <Route path="/movies/my-collection" element={<Protected><MyCollection /></Protected>} />
+
+          {/* Dashboard Routes */}
+          <Route path="/dashboard" element={<Protected><DashboardLayout /></Protected>}>
+            <Route index element={<DashboardHome />} />
+            <Route path="profile" element={<MyProfile />} />
+            <Route path="my-collection" element={<MyCollection />} />
+          </Route>
+
           <Route path="/watchlist" element={<Protected><Watchlist /></Protected>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

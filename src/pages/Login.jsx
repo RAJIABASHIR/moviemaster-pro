@@ -110,37 +110,49 @@ export default function Login() {
         </button>
       </form>
 
-<button
-  type="button"
-  onClick={google}
-  disabled={loading}
-  className="btn w-full mt-3 disabled:opacity-60 disabled:cursor-not-allowed"
->
-  <span className="inline-flex items-center justify-center gap-3 w-full">
-    {/* Google G in a white circular chip for contrast */}
-    <span
-      className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-white ring-1 ring-black/5"
-      aria-hidden="true"
-    >
-      <svg
-        viewBox="0 0 48 48"
-        className="w-4 h-4"
-        role="img"
-        focusable="false"
-        aria-label="Google logo"
+      <button
+        type="button"
+        onClick={() => {
+          setEmail("demo@example.com");
+          setPassword("Password123");
+        }}
+        disabled={loading}
+        className="btn w-full mt-3 justify-center bg-gray-600 hover:bg-gray-700 text-white disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.6-6 8-11.3 8-6.9 0-12.5-5.6-12.5-12.5S17.1 11 24 11c3.2 0 6.1 1.2 8.3 3.2l5.7-5.7C34.7 5.4 29.6 3.5 24 3.5 12 3.5 2.5 13 2.5 25S12 46.5 24 46.5 45.5 37 45.5 25c0-1.6-.2-3.1-.6-4.5z"/>
-        <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 18.9 13 24 13c3.2 0 6.1 1.2 8.3 3.2l5.7-5.7C34.7 7.4 29.6 5.5 24 5.5c-7.3 0-13.6 4.1-16.7 10z"/>
-        <path fill="#4CAF50" d="M24 44.5c5.3 0 10.1-2 13.6-5.3l-6.3-5.2c-2 1.4-4.6 2.2-7.3 2.2-5.3 0-9.7-3.4-11.3-8l-6.6 5c3.1 6.1 9.4 11.3 17.9 11.3z"/>
-        <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1 2.8-3.2 5.2-6 6.5l6.3 5.2C39.2 36.2 41.5 31 41.5 25c0-1.6-.2-3.1-.6-4.5z"/>
-      </svg>
-    </span>
+        Demo User Credential
+      </button>
 
-    <span className="leading-none">
-      {loading ? "Signing in…" : "Google Login"}
-    </span>
-  </span>
-</button>
+      <button
+        type="button"
+        onClick={google}
+        disabled={loading}
+        className="btn w-full mt-3 disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        <span className="inline-flex items-center justify-center gap-3 w-full">
+          {/* Google G in a white circular chip for contrast */}
+          <span
+            className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-white ring-1 ring-black/5"
+            aria-hidden="true"
+          >
+            <svg
+              viewBox="0 0 48 48"
+              className="w-4 h-4"
+              role="img"
+              focusable="false"
+              aria-label="Google logo"
+            >
+              <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.6-6 8-11.3 8-6.9 0-12.5-5.6-12.5-12.5S17.1 11 24 11c3.2 0 6.1 1.2 8.3 3.2l5.7-5.7C34.7 5.4 29.6 3.5 24 3.5 12 3.5 2.5 13 2.5 25S12 46.5 24 46.5 45.5 37 45.5 25c0-1.6-.2-3.1-.6-4.5z" />
+              <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 18.9 13 24 13c3.2 0 6.1 1.2 8.3 3.2l5.7-5.7C34.7 7.4 29.6 5.5 24 5.5c-7.3 0-13.6 4.1-16.7 10z" />
+              <path fill="#4CAF50" d="M24 44.5c5.3 0 10.1-2 13.6-5.3l-6.3-5.2c-2 1.4-4.6 2.2-7.3 2.2-5.3 0-9.7-3.4-11.3-8l-6.6 5c3.1 6.1 9.4 11.3 17.9 11.3z" />
+              <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1 2.8-3.2 5.2-6 6.5l6.3 5.2C39.2 36.2 41.5 31 41.5 25c0-1.6-.2-3.1-.6-4.5z" />
+            </svg>
+          </span>
+
+          <span className="leading-none">
+            {loading ? "Signing in…" : "Google Login"}
+          </span>
+        </span>
+      </button>
 
       <div className="text-sm mt-4">
         No account? <Link className="text-primary" to="/register">Register</Link>
